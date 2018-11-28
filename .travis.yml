@@ -8,6 +8,8 @@ env:
     secure: dsUsq7HoyhWDfN4vCXqrlmW1nK02SeIRjhttnLoSzRjV0d8od8b0jqzblemh/hkgmRWFAlujRmylaWRlth4dBeE+siTPKxWhqqcE5GpEsPa9KXm6HFm4SodXuoLjRBjFrDnHYaFNI7CPsROaNCkKzMSdIHof7PzgYMnLEhRJH2w45RzP/KsJ6/mfxHsE002GUfzOfjbffAgdSEbhPh3RfYGbOxPgZ2Fpw7YPiH80aTnmNEK3hglD+0LplXdZaRJJSQBVQnJoYrQU/SMkjMEcwvirzJNavJU/y1FpzpdFCOwXPYbScdRy41R3x+4Kim6Knc3OzAdzBYZ4U3fFB21WP6UrdTVQVUkDNMx3lc8egA4QtcmdX1g1ZRtStDuoPy6EoSYE1i9yPvw3ePwMUdfsNP6iaqtgB0pQoGSiz7SqrCPRXpL/Z0rQ/ea7ENtPw9Fn0yHkAhgE6ENd0HStRwdbvtmIV6oDcND3vVN4cfjV+tFyQbgeux9OHYPsCiUVLS9HjdjogCo67+kUZbCsTpRP91rFeacHt5HBqRQ1hR/4auTQJRl7lp7FACC38Y0Piw+08cEuTXPIS/NlNdQidiW3VbKizzLzAxg48IT3MNTqeyjYIHkGKYDr2eh662b3ntb/mN9qM+VRvg1gUzTrH8bW5IP+ksOcvgJAFhDMxWe2G8c=
 before_install:
 - openssl aes-256-cbc -k "$super_secret_password" -in super_secret.txt.enc -out super_secret.txt -d
+- openssl aes-256-cbc -K $encrypted_4430460ee025_key -iv $encrypted_4430460ee025_iv
+  -in assets/server.key.enc -out assets/server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
