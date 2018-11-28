@@ -25,10 +25,27 @@ before_install:
 
 
 # require the branch name to be master (note for PRs this is the base branch name)
-if: branch = masternot
-  script:
-  - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 3
-  - sfdx force:org:display -u ciorg
-  - sfdx force:source:push -u ciorg
-  - sfdx force:apex:test:run -u ciorg --wait 10
-  - sfdx force:org:delete -u ciorg -p
+if: branch = master
+  script: echo "Deploying master"
+
+# 
+if: branch = uat
+  script: echo "Deploying uat"
+
+# 
+if: branch = sit
+  script: echo "Deploying sit"
+
+# 
+if: branch = develop
+  script: echo "Deploying develop"
+
+
+
+
+#  script:
+#  - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 3
+#  - sfdx force:org:display -u ciorg
+#  - sfdx force:source:push -u ciorg
+#  - sfdx force:apex:test:run -u ciorg --wait 10
+#  - sfdx force:org:delete -u ciorg -p
