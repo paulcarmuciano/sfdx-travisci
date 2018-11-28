@@ -38,8 +38,7 @@ before_install:
 
 
 script:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then 
-  fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then echo "master" fi
 
 #    sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 3;
 #    sfdx force:org:display -u ciorg;
