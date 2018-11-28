@@ -31,9 +31,18 @@ before_install:
 #- sfdx force:apex:test:run -u ciorg --wait 10
 #- sfdx force:org:delete -u ciorg -p
 
-stages:
-  - name: deploy
-    # require the branch name to be master (note for PRs this is the base branch name)
-    - if [ "$TRAVIS_BRANCH" == "master" ]; then 
-      echo "deploy master"
-    fi
+#stages:
+#  - name: deploy
+#    # require the branch name to be master (note for PRs this is the base branch name)
+#    if: branch = master
+
+
+script:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then 
+    sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 3;
+    sfdx force:org:display -u ciorg;
+    sfdx force:source:push -u ciorg;
+    sfdx force:apex:test:run -u ciorg --wait 10;
+    sfdx force:org:delete -u ciorg -p;
+  fi
+
