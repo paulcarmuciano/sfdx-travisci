@@ -5,10 +5,10 @@ env:
   matrix:
   - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
   global:
-    secure: dsUsq7HoyhWDfN4vCXqrlmW1nK02SeIRjhttnLoSzRjV0d8od8b0jqzblemh/hkgmRWFAlujRmylaWRlth4dBeE+siTPKxWhqqcE5GpEsPa9KXm6HFm4SodXuoLjRBjFrDnHYaFNI7CPsROaNCkKzMSdIHof7PzgYMnLEhRJH2w45RzP/KsJ6/mfxHsE002GUfzOfjbffAgdSEbhPh3RfYGbOxPgZ2Fpw7YPiH80aTnmNEK3hglD+0LplXdZaRJJSQBVQnJoYrQU/SMkjMEcwvirzJNavJU/y1FpzpdFCOwXPYbScdRy41R3x+4Kim6Knc3OzAdzBYZ4U3fFB21WP6UrdTVQVUkDNMx3lc8egA4QtcmdX1g1ZRtStDuoPy6EoSYE1i9yPvw3ePwMUdfsNP6iaqtgB0pQoGSiz7SqrCPRXpL/Z0rQ/ea7ENtPw9Fn0yHkAhgE6ENd0HStRwdbvtmIV6oDcND3vVN4cfjV+tFyQbgeux9OHYPsCiUVLS9HjdjogCo67+kUZbCsTpRP91rFeacHt5HBqRQ1hR/4auTQJRl7lp7FACC38Y0Piw+08cEuTXPIS/NlNdQidiW3VbKizzLzAxg48IT3MNTqeyjYIHkGKYDr2eh662b3ntb/mN9qM+VRvg1gUzTrH8bW5IP+ksOcvgJAFhDMxWe2G8c=
+  - secure: 14q6THPtZnDI7hyAKoFsjS4FlV6APhdoUHCclcG9AEw3mEGvKJi4SYtXIbaaFJhKW5DEc2ArWNdhLqCI5Rkig6KfypLDEpVup97hbwYFO14HhRcDpqdDPUHLO4o0jKap+yLeL0/p+d20pVYZBF8c/NS0rMI4HsaWXD9OcoftchaWgTBMRhN1vWSez8sWT+uuzmn/zKwmiBHpnompMToRBVAR9oDK1CDXmYUXy6FDRoVbROvgydcuBvXo5gCBHBz4dkRUAZHzDFfRxcAOY268bgH7FS7cC/1txmndeLqcy4ua0ycgKd7eUEDq/gTOzy9E9T1RRWPN1C0PJVHjnj0W78sTxvNvFU0Xl2nnvkOeziI/9edzSe0I6sk5JiLlFH1wTGPlZZT3cDS8NZrgzYjyCNERr2zRRi9g7sKwfbi+dU0dNSlUESv4rb4oUsgAgzPTIl8lj5D5VnlBmN6p7NT9n3WXS8w+FIYLx0YcZDsioEVZOrF8t/wv8IAnsTycyc2c3RAvELDc6/Kd3v/LSYpsXstReWWIuzwgDyFjoSuBcGUsrUhwynTAjgTB6EAfyMzIRBwzYqsGFBCjT/TmUYfnjCr5wGwGkyjlB2M/kE0FofTGWwV6AExxBxIUR1qHnkcvZRe38tcTRBH5cHXJfKWpw9NRlGGGQ7gkqu8JzkRlGYU=
 before_install:
 - openssl version
-- openssl aes-256-cbc -k "$super_secret_password" -in super_secret.txt.enc -out super_secret.txt -d
+- openssl aes-256-cbc -k "$super_secret_password" -in assets/super_secret.txt.enc -out assets/super_secret.txt -d
 - openssl aes-256-cbc -k $super_secret_password -in assets/server.key.enc -out assets/server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
@@ -23,27 +23,8 @@ before_install:
 - sfdx plugins --core
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
-
-#
-#script:
-#- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 3
-#- sfdx force:org:display -u ciorg
-#- sfdx force:source:push -u ciorg
-#- sfdx force:apex:test:run -u ciorg --wait 10
-#- sfdx force:org:delete -u ciorg -p
-
-#stages:
-#  - name: deploy
-#    # require the branch name to be master (note for PRs this is the base branch name)
-#    if: branch = master
-
-
 script:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then 
-      echo "master"; 
-      sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 3;
-      sfdx force:org:display -u ciorg;
-      sfdx force:source:push -u ciorg;
-      sfdx force:apex:test:run -u ciorg --wait 10;
-      sfdx force:org:delete -u ciorg -p;
-    fi
+- if [ "$TRAVIS_BRANCH" == "master" ]; then echo "master"; sfdx force:org:create -v
+  HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 3; sfdx force:org:display
+  -u ciorg; sfdx force:source:push -u ciorg; sfdx force:apex:test:run -u ciorg --wait
+  10; sfdx force:org:delete -u ciorg -p; fi
