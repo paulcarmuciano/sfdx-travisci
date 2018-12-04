@@ -8,7 +8,7 @@ env:
   - secure: 14q6THPtZnDI7hyAKoFsjS4FlV6APhdoUHCclcG9AEw3mEGvKJi4SYtXIbaaFJhKW5DEc2ArWNdhLqCI5Rkig6KfypLDEpVup97hbwYFO14HhRcDpqdDPUHLO4o0jKap+yLeL0/p+d20pVYZBF8c/NS0rMI4HsaWXD9OcoftchaWgTBMRhN1vWSez8sWT+uuzmn/zKwmiBHpnompMToRBVAR9oDK1CDXmYUXy6FDRoVbROvgydcuBvXo5gCBHBz4dkRUAZHzDFfRxcAOY268bgH7FS7cC/1txmndeLqcy4ua0ycgKd7eUEDq/gTOzy9E9T1RRWPN1C0PJVHjnj0W78sTxvNvFU0Xl2nnvkOeziI/9edzSe0I6sk5JiLlFH1wTGPlZZT3cDS8NZrgzYjyCNERr2zRRi9g7sKwfbi+dU0dNSlUESv4rb4oUsgAgzPTIl8lj5D5VnlBmN6p7NT9n3WXS8w+FIYLx0YcZDsioEVZOrF8t/wv8IAnsTycyc2c3RAvELDc6/Kd3v/LSYpsXstReWWIuzwgDyFjoSuBcGUsrUhwynTAjgTB6EAfyMzIRBwzYqsGFBCjT/TmUYfnjCr5wGwGkyjlB2M/kE0FofTGWwV6AExxBxIUR1qHnkcvZRe38tcTRBH5cHXJfKWpw9NRlGGGQ7gkqu8JzkRlGYU=
 before_install:
 - openssl version
-- openssl aes-256-cbc -k "$super_secret_password" -in assets/super_secret.txt.enc -out assets/super_secret.txt -d -debug -p
+# - openssl aes-256-cbc -k "$super_secret_password" -in assets/super_secret.txt.enc -out assets/super_secret.txt -d -debug -p
 - openssl aes-256-cbc -k $super_secret_password -in assets/server.key.enc -out assets/server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
