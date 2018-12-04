@@ -47,7 +47,3 @@ script:
       sfdx force:apex:test:run -u ciorg --wait 10;
       sfdx force:org:delete -u ciorg -p;
     fi
-
-- openssl version
-- openssl aes-256-cbc -K $encrypted_4430460ee025_key -iv $encrypted_4430460ee025_iv
-  -in assets/server.key.enc -out assets/server.key -d
